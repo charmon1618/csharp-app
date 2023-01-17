@@ -1,0 +1,48 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Payroll";
+}
+
+<div class="text-center">
+    <h1 class="display-2">Welcome to Paylocity Payroll App</h1>
+
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Name</th>
+                <th>Pay</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>id</th>
+                <th>Name</th>
+                <th>Pay</th>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+
+@section scripts
+    {
+    <script>
+        $(function () {
+            //the boilerplate VS set up used jQuery so I ran with it. Why complicate things?
+            $('#example').DataTable({
+                ajax: {
+                    url: "https://localhost:44340/api/EmployeePayroll/",
+                    dataSrc: 'data',
+                },
+                //I spent hours until I realized I had columns inside of ajax instead of next to it, oof
+                columns: [
+                    { 'data': 'id' },
+                    { 'data': 'name' },
+                    { 'data': 'pay' },
+                ],
+            });
+        });
+    </script>
+}

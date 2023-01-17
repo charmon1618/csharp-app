@@ -1,0 +1,97 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Paylocity HR Self Service</h1>
+
+    <form class="row">
+        <div class="col-md-6">
+            <label class="col-form-label">First Name</label>
+            <input type="text" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label class="col-form-label">Last Name</label>
+            <input type="text" class="form-control" />
+        </div>
+    </form>
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Type</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+@section scripts
+    {
+    <script>
+        //Stubbing data to get something up.
+        var ajaxData = {
+            "data": [
+                {
+                    "DT_RowId": "row_1",
+                    "Name": "Jack",
+                    "Age": "30",
+                    "Type": "Spouse"
+                },
+                {
+                    "DT_RowId": "row_2",
+                    "Name": "Sally",
+                    "Age": "10",
+                    "Type": "Child"
+                },
+            ]
+        };
+
+        var editor;
+        //I wanted to stub something out but I had run over the 3 hours.
+        //https://editor.datatables.net/examples/simple/simple.html
+        //I also did #2 before #1.
+        $(document).ready(function () {
+            editor = new $.fn.dataTable.Editor({
+                ajax: ajaxData,
+                table: "#example",
+                fields: [{
+                    label: "Name",
+                    name: "Name"
+                },
+                {
+                    label: "Age",
+                    name: "Age",
+                }, {
+                    label: "Type",
+                    name: "Type"
+                }]
+            });
+
+            $('#example').DataTable({
+                dom: "Bfrtip",
+                ajax: ajaxData,
+                columns: [
+                    { 'data': 'Name' },
+                    { 'data': 'Age' },
+                    { 'data': 'Type' }
+                ],
+                select: true,
+                buttons: [
+                    { extend: "create", editor: editor },
+                    { extend: "edit",   editor: editor },
+                    { extend: "remove", editor: editor }
+                ]
+            });
+        })
+    </script>
+}
